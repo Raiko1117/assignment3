@@ -24,27 +24,31 @@
     </form>
 
     <p id="temp">
-      Temperature is: <%= weatherFromDB ? `${weatherFromDB.temperature}°C` : ''
+      Temperature is: <%= weatherFromDB ? ${weatherFromDB.temperature}°C : ''
       %>
     </p>
     <p id="temp">
       Description is: <%= weatherFromDB ?
-      `${weatherFromDB.weatherDescription}°C` : '' %>
+      ${weatherFromDB.weatherDescription}°C : '' %>
     </p>
     <p id="temp">
-      Feels is: <%= weatherFromDB ? `${weatherFromDB.feelsLike}°C` : '' %>
+      Feels is: <%= weatherFromDB ? ${weatherFromDB.feelsLike}°C : '' %>
     </p>
     <p id="temp">
-      Pressure is: <%= weatherFromDB ? `${weatherFromDB.pressure}°C` : '' %>
+      Pressure is: <%= weatherFromDB ? ${weatherFromDB.pressure}°C : '' %>
     </p>
     <p id="temp">
-      Wind speed is: <%= weatherFromDB ? `${weatherFromDB.windSpeed}°C` : '' %>
+      Wind speed is: <%= weatherFromDB ? ${weatherFromDB.windSpeed}°C : '' %>
     </p>
     <img
       id="weatherImage"
-      src="<%= weatherFromDB ? `http://openweathermap.org/img/wn/${weatherFromDB.icon}@2x.png` : '' %>"
+      src="<%= weatherFromDB ? http://openweathermap.org/img/wn/${weatherFromDB.icon}@2x.png : '' %>"
     />
-
+    <% if (role === "admin") { %>
+    <div>
+      <a href="/admin-pannel">Manage users</a>
+    </div>
+    <% } %>
     <h1>Map User Location</h1>
     <button onclick="displayMap('<%= JSON.stringify(weatherFromDB) %>')">
       Open Map

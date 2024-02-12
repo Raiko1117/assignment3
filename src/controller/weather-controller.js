@@ -3,9 +3,16 @@ const https = require("https");
 
 exports.getWeather = async (req, res) => {
   const query = req.query.city;
+  const role = req.query.role;
+  const email = req.query.email;
   const apiKey = "2cfe730f0d4e1da90e9ab48860bd6122";
   const unit = "metric";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=${unit}`;
+
+  if (role !== "admin") {
+    res.json({ error: "access rejected" });
+    return;
+  }
 
   https.get(url, function (response) {
     let rawData = "";
@@ -38,10 +45,10 @@ exports.getWeather = async (req, res) => {
         const weatherFromDB = await Weather.findOne().sort({ createdAt: -1 });
 
         // Отправка данных на клиент
-        res.render("index", { weatherFromDB, error });
+        res.render("index", { weatherFromDB, error, email, role });
       } catch (err) {
         error = "Error, Please try again";
-        res.render("index", { weatherFromDB: null, error });
+        res.render("index", { weatherFromDB: null, error, email, role });
       }
     });
   });

@@ -43,9 +43,9 @@ app.post("/signup", (req, res) => {
     name: username,
     password: bcrypt.hashSync(password, saltRounds),
     email: email,
-    role: "user",
+    role: "admin",
   });
-  res.redirect("/weather");
+  res.redirect(`/weather?email=${email}&role=user`);
 });
 
 app.post("/login", async (req, res) => {
@@ -56,7 +56,7 @@ app.post("/login", async (req, res) => {
       res.render("login", { error: "Invalid credentials" });
     }
     if (bcrypt.compareSync(password, user.password)) {
-      res.redirect("/weather");
+      res.redirect(`/weather?email=${email}&role=${user.role}`);
     } else {
       res.render("login", { error: "Invalid password" });
     }
@@ -136,5 +136,5 @@ app.delete("/admin-panel/delete-user/:userId", async (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, async () => {
-  console.log(`Server running on Port: ${port}`);
+  console.log('Server running on Port: ${port}');
 });
