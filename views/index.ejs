@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home page</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1 style="text-align: center">Welcome to Home page</h1>
+    <h1>The temperature</h1>
+    <form id="weatherForm" action="/weather" method="get">
+      <input type="text" name="city" placeholder="Enter city name" />
+      <button type="submit">Show Weather</button>
+    </form>
+
+    <p id="temp">
+      Temperature is: <%= weatherFromDB ? `${weatherFromDB.temperature}°C` : ''
+      %>
+    </p>
+    <p id="temp">
+      Description is: <%= weatherFromDB ?
+      `${weatherFromDB.weatherDescription}°C` : '' %>
+    </p>
+    <p id="temp">
+      Feels is: <%= weatherFromDB ? `${weatherFromDB.feelsLike}°C` : '' %>
+    </p>
+    <p id="temp">
+      Pressure is: <%= weatherFromDB ? `${weatherFromDB.pressure}°C` : '' %>
+    </p>
+    <p id="temp">
+      Wind speed is: <%= weatherFromDB ? `${weatherFromDB.windSpeed}°C` : '' %>
+    </p>
+    <img
+      id="weatherImage"
+      src="<%= weatherFromDB ? `http://openweathermap.org/img/wn/${weatherFromDB.icon}@2x.png` : '' %>"
+    />
+
+    <h1>Map User Location</h1>
+    <button onclick="displayMap('<%= JSON.stringify(weatherFromDB) %>')">
+      Open Map
+    </button>
+
+    <div id="map" style="height: 400px"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      const displayMap = (weather) => {
+        const weatherFromDB = {
+          latitude: JSON.parse(weather).latitude,
+          longitude: JSON.parse(weather).longitude,
+        };
+        const map = L.map("map").setView(
+          [weatherFromDB.latitude, weatherFromDB.longitude],
+          10
+        );
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+
+        L.marker([weatherFromDB.latitude, weatherFromDB.longitude])
+          .addTo(map)
+          .bindPopup("City Location")
+          .openPopup();
+      };
+    </script>
+  </body>
+</html>
