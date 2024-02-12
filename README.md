@@ -1,4 +1,10 @@
 For teacher 
-to into localhost:/3000/login
-localhost:/3000/signup
-localhost:/3000/admin-panel
+to into 
+https://node-mongo-api-p0ku.onrender.com/signup
+https://node-mongo-api-p0ku.onrender.com/login
+https://node-mongo-api-p0ku.onrender.com/admin-pannel
+
+admin
+name: arman 
+email: "raiymbek_raisov@mail.ru"
+password: asdf
